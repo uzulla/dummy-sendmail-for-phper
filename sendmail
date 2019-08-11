@@ -1,0 +1,25 @@
+#!/usr/bin/php
+<?php
+
+// get args
+$dst_dir = getopt('d:')['d'];
+
+// check option, output usage.
+if(count($dst_dir)===0){
+    echo "Dummy sendmail script".PHP_EOL;
+    echo "usage: sendmail -d {dst dir}".PHP_EOL;
+    die(1);
+}
+
+// check dst dir
+if(!file_exists($dst_dir) || !is_dir($dst_dir) || !is_writable($dst_dir)){
+    echo "destination directory is not exists or not writable.";
+    die(2);
+}
+
+// generate file name(time stamp)
+$sec = explode(".", (string)microtime(true));
+$file_name = date( "Y-m-d-h-i-s_", (int)$sec[0]).$sec[1].".eml";
+
+// write
+file_put_contents($dst_dir. DIRECTORY_SEPARATOR . $file_name, file_get_contents("php://stdin"));
