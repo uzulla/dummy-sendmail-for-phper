@@ -1,5 +1,9 @@
 #!/usr/bin/php
 <?php
+ini_set("error_log", __DIR__."/error.log");
+
+error_log("start");
+error_log("args:". print_r($argv, true));
 
 // get args
 $dst_dir = getopt('d:')['d'];
@@ -11,9 +15,17 @@ if(count($dst_dir)===0){
     die(1);
 }
 
+// discard trailing -d values 
+if(is_array($dst_dir)){
+   $dst_dir = $dst_dir[0];
+}
+
+error_log("dst_dir: ".print_r($dst_dir,true));
+
 // check dst dir
 if(!file_exists($dst_dir) || !is_dir($dst_dir) || !is_writable($dst_dir)){
     echo "destination directory is not exists or not writable.";
+    error_log("destination directory is not exists or not writable.");
     die(2);
 }
 
@@ -21,5 +33,8 @@ if(!file_exists($dst_dir) || !is_dir($dst_dir) || !is_writable($dst_dir)){
 $sec = explode(".", (string)microtime(true));
 $file_name = date( "Y-m-d-h-i-s_", (int)$sec[0]).$sec[1].".eml";
 
+error_log("filename: {$file_name}");
+
 // write
 file_put_contents($dst_dir. DIRECTORY_SEPARATOR . $file_name, file_get_contents("php://stdin"));
+
