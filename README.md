@@ -12,14 +12,14 @@ php(>=7)
 
 ```
 # in php.ini
-sendmail = "/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir"
+sendmail = "/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir -t"
 ```
 
 or 
 
 ```
 # in code
-ini_set("sendmail", "/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir");
+ini_set("sendmail", "/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir -t");
 ```
 
 and go on
@@ -28,7 +28,7 @@ and go on
 
 ```
 # in code
-$transport = new Swift_SendmailTransport('/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir');
+$transport = new Swift_SendmailTransport('/path/to/dummy-sendmail-for-phper/sendmail -d /path/to/some/writable_dir -t');
 ```
 
 
